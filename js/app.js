@@ -5,24 +5,24 @@
  * use of. It also uses the Handlebars templating library and
  * jQuery.
  */
-var allFeeds = []; //set to fail jasmine
 
 // The names and URLs to all of the feeds we'd like available.
-// var allFeeds = [
-//     {
-//         name: 'Udacity Blog',
-//         url: 'http://blog.udacity.com/feed'
-//     }, {
-//         name: 'CSS Tricks',
-//         url: 'http://feeds.feedburner.com/CssTricks'
-//     }, {
-//         name: 'HTML5 Rocks',
-//         url: 'http://feeds.feedburner.com/html5rocks'
-//     }, {
-//         name: 'Linear Digressions',
-//         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
-//     }
-// ];
+var allFeeds = [
+    {
+        name: 'Udacity Blog',
+        url: 'http://blog.udacity.com/feed'
+    }, {
+        name: 'CSS Tricks',
+        url: 'http://feeds.feedburner.com/CssTricks'
+    }, {
+        name: 'HTML5 Rocks',
+        url: 'http://feeds.feedburner.com/html5rocks'
+    }, {
+        name: 'Linear Digressions',
+        url: 'http://feeds.feedburner.com/udacity-linear-digressions'
+    }
+];
+// var allFeeds = []; //set to fail jasmine
 
 
 /* This function starts up our application. The Google Feed
@@ -42,6 +42,9 @@ function init() {
  * This function all supports a callback as the second parameter
  * which will be called after everything has run successfully.
  */
+function test(string) {
+  console.log(string);
+}
  function loadFeed(id, cb) {
      var feedUrl = allFeeds[id].url,
          feedName = allFeeds[id].name;
@@ -71,6 +74,7 @@ function init() {
                      container.append(entryTemplate(entry));
                  });
 
+
                  if (cb) {
                      cb();
                  }
@@ -80,10 +84,13 @@ function init() {
                  if (cb) {
                      cb();
                  }
+                  console.log(status);
+                  console.log(err);
                },
        dataType: "json"
      });
  }
+
 
 /* Google API: Loads the Feed Reader API and defines what function
  * to call when the Feed Reader API is done loading.
