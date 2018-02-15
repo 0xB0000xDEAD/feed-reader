@@ -30,8 +30,8 @@ $(
        * and that the URL is not empty.
        */
       it('has all the Url defined and not empty', function() {
-        // regex expression to validate url
-        const regexDiego = new RegExp('^' +
+        // regex expression to validate url. Diego Perini regex from https://mathiasbynens.be/demo/url-regex
+        const regex = new RegExp('^' +
           // protocol identifier
           '(?:(?:https?|ftp)://)' +
           // user:pass authentication
@@ -60,7 +60,7 @@ $(
         allFeeds.forEach((e) => {
           // console.log(e.url);
           expect(e.url).toBeDefined();
-          expect(e.url).toMatch(regexDiego);
+          expect(e.url).toMatch(regex);
         });
       });
       /* TODO: Write a test that loops through each feed
@@ -70,7 +70,6 @@ $(
       it('has a non empty name', function() {
         allFeeds.forEach((e) => {
           expect(e.name).toBeDefined();
-          expect(e.name).not.toBe('');
         });
       });
     });
@@ -83,6 +82,7 @@ $(
        */
       it('is closed at default', function() {
         const bodyClass = $('body')[0].className;
+        //check the default status of the menu
         expect(bodyClass).toBe('menu-hidden');
       });
       /* TODO: Write a test that ensures the menu changes
@@ -104,7 +104,6 @@ $(
       });
     });
     /* TODO: Write a new test suite named "Initial Entries" */
-    let scooby = this;
     describe('Initial Entries', function() {
       /* TODO: Write a test that ensures when the loadFeed
        * function is called and completes its work, there is at least
@@ -112,16 +111,14 @@ $(
        * Remember, loadFeed() is asynchronous so this test will require
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
-      console.log(scooby);
       beforeEach(function(done) {
         loadFeed(0, function() {
           done();
         });
       });
-
       const container = $('.feed');
       it('loaded at least one link', function(done) {
-        //  console.log(container);
+        //check if there is one link o more after loadFeed()
         expect(container[0].children.length).toBeGreaterThan(0);
         done();
       });
@@ -134,9 +131,9 @@ $(
        */
       beforeEach(function(done) {
         loadFeed(0, () => {
-          // the arrow function help to store the jquery
-          //selector in the right this, so it can be passed through the spec
-          //  this.firstArticle = $(" .entry h2").html();
+          /** the arrow function help with the hit the right this, so firstArticle and feedLink can be passed
+              to the it().
+          **/
           this.firstArticle = document.getElementsByClassName('entry-link')[0].href;
           this.feedLink = document.getElementsByClassName('header-title')[0].innerText;
           console.log(this.feedLink);
@@ -147,16 +144,13 @@ $(
           });
         });
       });
-
       it('the content change when a new feed is loaded', function(done) {
         const firstArticle = document.getElementsByClassName('entry-link')[0].href;
         const feedLink = document.getElementsByClassName('header-title')[0].innerText;
-        console.log(feedLink);
-        console.log(document.getElementsByClassName('entry-link')[0].href);
+        // check both the feed link and the first article loaded against the old one
         expect(firstArticle).not.toBe(this.firstArticle);
         expect(feedLink).not.toBe(this.feedLink);
         done();
       });
     });
-
   })());
