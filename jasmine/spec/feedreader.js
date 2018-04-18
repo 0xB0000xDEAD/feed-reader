@@ -123,7 +123,8 @@ $(
       });
       it('loaded at least one link', function (done) {
         //check if there is one link o more after loadFeed()
-        const articles = $('.feed .entry-link');
+        const articles = $('.feed .entry');
+
         expect(articles.length).toBeGreaterThan(0);
         done();
       });
@@ -140,7 +141,7 @@ $(
 
       beforeEach(function (done) {
 
-        loadFeed(0, function () {
+        loadFeed(1, function () {
           firstArticleTitle = $(titleSelector)[0].innerHTML;
           firstArticleLink = $(linkSelector)[0].href;
           //fake a new feed loading  3th element in allFeeds
@@ -153,8 +154,8 @@ $(
         const newFirstArticleTitle = $(titleSelector)[0].innerHTML;
         const newFirstArticleLink = $(linkSelector)[0].href;
         // check both the feed link and the first article loaded against the old one
-        expect(newFirstArticleTitle).not.toMatch(firstArticleTitle);
-        expect(newFirstArticleLink).not.toMatch(firstArticleLink);
+        expect(newFirstArticleTitle).not.toBe(firstArticleTitle);
+        expect(newFirstArticleLink).not.toBe(firstArticleLink);
         done();
       });
     });
